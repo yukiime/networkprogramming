@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	char myBuffer[1000];
 	FILE *myFile=fopen("dumper","w+");
 	
-	printf("Getting info.\n");
+	// printf("Getting info.\n");
 	if ((rv = getaddrinfo(argv[1], SERVERPORT, &hints, &servinfo)) != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
 
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 		sprintf(&myBuffer, "Hej World, %d asd %g.\n", (int)4, (double)4.54); //=> myBuffer		
 		return 1;
 	}
-	printf("Got info.\n");
+	// printf("Got info.\n");
 	
 	// loop through all the results and make a socket
 	for(p = servinfo; p != NULL; p = p->ai_next) {
@@ -68,7 +68,8 @@ int main(int argc, char *argv[])
 		return 2;
 	}
 
-	printf("sockfd == %d \n",sockfd );
+	// printf("sockfd == %d \n",sockfd );
+	
 	/* We have a socket! */
 	
 	char myAddress[30];
