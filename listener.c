@@ -105,11 +105,14 @@ int main(void)
 	socklen_t local_sinlen = sizeof(local_sin);
 	getsockname(sockfd,(struct sockaddr*)&local_sin, &local_sinlen);
 
+	printf("listener: bound to address %s:%d\n",
+           inet_ntop(AF_INET, &local_sin.sin_addr, myAddress, INET_ADDRSTRLEN),
+           ntohs(local_sin.sin_port));
 	printf("listener: waiting to recvfrom...\n");
 	
-	printf("bob,\n");
-	printf("family = %d || %d \n",p->ai_family, local_sin.sin_family);
-	printf("AF_INET = %d and AF_INET6 = %d and AF_UNSPEC  = %d  and AF_UNIX = %d \n", AF_INET, AF_INET6, AF_UNSPEC, AF_UNIX);
+	// printf("bob,\n");
+	// printf("family = %d || %d \n",p->ai_family, local_sin.sin_family);
+	// printf("AF_INET = %d and AF_INET6 = %d and AF_UNSPEC  = %d  and AF_UNIX = %d \n", AF_INET, AF_INET6, AF_UNSPEC, AF_UNIX);
 	
 	char mySend[100000];
 	/* Missing for TCP server.
@@ -136,7 +139,12 @@ int main(void)
 
 		printf(": \"%s\"\n", buf);
 
-		
+		// Print the hex dump of the message
+	        for (int i = 0; i < numbytes; i++)
+	        {
+	            printf(" %0x", buf[i]);
+	        }
+	        printf("\n");
 		
 	}
 	close(sockfd);
