@@ -167,6 +167,17 @@ int main(void)
 		    }
 		  }
 		  
+	    if(strcmp(command,"add")==0){
+		    int numberint1,numberint2;
+		    // Client sent 'command', check that it provided the correct magic word.\n");
+		    rv=sscanf(msg,"%s %d %d",command,numberint1,numberint2);
+		    printf("rv=%d Decoded command + sum arithmetic as: %s %d %d\n",rv,command,numberint1,numberint2);
+		    int result = optionint1 + optionint2;
+		    sprintf(msg, "Result of addition: %d", result);
+		    send(new_fd, &msg, strlen(msg), 0);
+		  }
+
+		  
 		  send(new_fd,&msg,readSize,0);	 
 		  printf("Child[%d]: sent => %s\n",childCnt,msg);
 		}//close interior while
