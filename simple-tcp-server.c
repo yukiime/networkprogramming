@@ -171,10 +171,18 @@ int main(void)
 		    int numberint1,numberint2;
 		    // Client sent 'command', check that it provided the correct magic word.\n");
 		    rv=sscanf(msg,"%s %d %d",command,&numberint1,&numberint2);
-		    printf("rv=%d Decoded command + sum arithmetic as: %s %d %d\n",rv,command,numberint1,numberint2);
-		    int result = numberint1 + numberint2;
-		    sprintf(msg, "Result of addition: %d", result);
-		    send(new_fd, &msg, strlen(msg), 0);
+		    if(rv == 3) {
+			printf("rv=%d Decoded command + sum arithmetic as: %s %d %d\n",rv,command,numberint1,numberint2);
+		        int result = numberint1 + numberint2;
+		        sprintf(msg, "Result of addition: %d \0", result);
+			msg[strlen(msg)] = '\0'; // 手动添加终止符
+			// 增加缓冲区的大小
+		        send(new_fd, msg, strlen(msg) + 1, 0);
+		    } else {
+		        // Handle sscanf failure
+		        strcpy(msg, "Invalid arguments for 'add' command.");
+		        send(new_fd, msg, strlen(msg), 0);
+		    }		    
 		  }
 
 		  
